@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <header>
+        <a th:href="@{/}">Menu</a>
+        <a th:href="@{/cart}">Cart</a>
+    </header>
+</head>
+<body>
+<h1>All products</h1>
+<br>
+<div th:each="item : ${items}" th:name="p">
+<!--    <div th:name = "id = ${product.getId()}"></div>-->
+<!--    <div th:with="productId=${product.getId()}"></div>-->
+<div>    <span th:text="${item.getId()}"></span>
+    <span th:text="${item.getTitle()}"></span>
+    <span th:text="${item.getCost()}"></span>
+    <button  name="add" type="submit"
+             th:onclick="${inCart.addProductToCart(item.getId())}">Add to cart</button>
+</div>
+</div>
+<!--data-th-object="${product.getId()}"-->
+<!--th:action="@{/cart}"-->
+<!--th:onclick="${inCart.addProductToCart(product.getId())}-->
+</body>
+</html>
