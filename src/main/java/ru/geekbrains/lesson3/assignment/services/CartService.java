@@ -7,6 +7,7 @@ import ru.geekbrains.lesson3.assignment.models.Product;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 
 @Component
@@ -15,7 +16,7 @@ public class CartService {
     @Autowired
     private ProductService productService;
 
-    private List<Product> productsInCart = new ArrayList<>();
+    private LinkedList<Product> productsInCart = new LinkedList<>();
 
     public void addProductToCart(Long id) {
         productsInCart.add(productService.getProduct(id));
@@ -25,11 +26,11 @@ public class CartService {
         productsInCart.remove(productService.getProduct(id));
     }
 
-    public List<Product> getProductsInCart() {
+    public LinkedList<Product> getProductsInCart() {
         return productsInCart;
     }
 
-    public List<Product> findAll() {
-        return Collections.unmodifiableList(productsInCart);
+    public LinkedList<Product> findAll() {
+        return productsInCart;
     }
 }
