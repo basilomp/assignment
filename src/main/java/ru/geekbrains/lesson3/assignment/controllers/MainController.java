@@ -1,15 +1,15 @@
 package ru.geekbrains.lesson3.assignment.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import ru.geekbrains.lesson3.assignment.models.Product;
 import ru.geekbrains.lesson3.assignment.services.CartService;
 import ru.geekbrains.lesson3.assignment.services.ProductService;
 
-@Controller
+import java.util.List;
+
+@RestController
 public class MainController {
 
     @Autowired
@@ -18,17 +18,24 @@ public class MainController {
     @Autowired
     private CartService cartService;
 
-    @GetMapping("")
-    public String test(Model model) {
-        model.addAttribute("items", productService.getProductList());
-            model.addAttribute("inCart", cartService);
-        return "products";
+    @GetMapping("/products")
+    public List<Product> getProducts() {
+        return productService.getProductList();
+    }
+
+    @DeleteMapping("/products/remove")
+    public void removeFromList(@RequestParam Long productId) {
+        productService.removeFromList(productId);
+    }
+
+    @PostMapping("/products/add")
+    public void addToCart(@RequestParam Long productId) {
+        cartService.addProductToCart(productId);
     }
 
     @GetMapping("/cart")
-    public String getCart(Model model) {
-        model.addAttribute("cart", cartService);
-        return "cart";
+    public List<Product> getCart() {
+        return cartService.getProductsInCart();
     }
 
 }

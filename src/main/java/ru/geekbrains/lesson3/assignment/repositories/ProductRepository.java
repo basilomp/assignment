@@ -4,17 +4,18 @@ import org.springframework.stereotype.Component;
 import ru.geekbrains.lesson3.assignment.models.Product;
 
 import javax.annotation.PostConstruct;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 @Component
 public class ProductRepository {
 
-    private List<Product> productList;
+    private List<Product> products;
 
-    public List<Product> findAll() {
-        return Collections.unmodifiableList(productList);
+    private LinkedList<Product> productList;
+
+    public LinkedList<Product> findAll() {
+        return productList;
+
     }
 
     public Product findById(Long id) {
@@ -24,15 +25,22 @@ public class ProductRepository {
                 .orElseThrow(() -> new RuntimeException("Product not found"));
     }
 
+    public void removeFromList(Long productId) {
+        productList.removeIf(product -> product.getId().equals(productId));
+    }
+
 
     @PostConstruct
     public void init() {
-        productList = Arrays.asList(
+        products = Arrays.asList(
                 new Product(1L, "Chocolate bar", 99),
                 new Product(2L, "Bacon-flavored crisps", 107),
                 new Product(3L, "Sparkling water", 75),
                 new Product(4L, "Canned tuna", 201),
                 new Product(5L, "Instant coffee", 412)
         );
+        productList = new LinkedList<>();
+        productList.addAll(products);
+
     }
 }

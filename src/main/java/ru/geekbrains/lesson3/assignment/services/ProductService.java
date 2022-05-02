@@ -3,6 +3,7 @@ package ru.geekbrains.lesson3.assignment.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 import ru.geekbrains.lesson3.assignment.models.Product;
 import ru.geekbrains.lesson3.assignment.repositories.ProductRepository;
 
@@ -20,6 +21,10 @@ public class ProductService {
 
     public List<Product> getProductList() {
         return productRepository.findAll();
+    }
+
+    public void removeFromList(Long id) {
+        productRepository.removeFromList(id);
     }
 
 }
